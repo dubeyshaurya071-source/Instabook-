@@ -1,0 +1,392 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Public creator profile for an Instabook user without PII.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Authenticated user UID."
+        },
+        "username": {
+          "type": "string",
+          "description": "Unique handle for the creator (2-30 chars)."
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Display name shown on profile and posts (1-50 chars)."
+        },
+        "bio": {
+          "type": "string",
+          "description": "Short creator biography (0-200 chars)."
+        },
+        "avatarUrl": {
+          "type": "string",
+          "description": "Profile avatar URL."
+        },
+        "profileVisibility": {
+          "type": "string",
+          "enum": ["public", "private"],
+          "description": "Visibility of the creator profile."
+        },
+        "followersCount": {
+          "type": "integer",
+          "description": "Number of followers."
+        },
+        "followingCount": {
+          "type": "integer",
+          "description": "Number of accounts followed."
+        },
+        "postsCount": {
+          "type": "integer",
+          "description": "Number of published video posts."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when profile was created."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when profile was last updated."
+        }
+      },
+      "required": [
+        "userId",
+        "username",
+        "displayName",
+        "bio",
+        "avatarUrl",
+        "profileVisibility",
+        "followersCount",
+        "followingCount",
+        "postsCount",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "FollowEdge": {
+      "title": "FollowEdge",
+      "description": "Follower or following relationship entry between two Instabook creators.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "UID of the related user."
+        },
+        "targetUserId": {
+          "type": "string",
+          "description": "UID of the followed creator."
+        },
+        "username": {
+          "type": "string",
+          "description": "Handle of the related user."
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Display name of the related user."
+        },
+        "avatarUrl": {
+          "type": "string",
+          "description": "Avatar URL of the related user."
+        },
+        "profileVisibility": {
+          "type": "string",
+          "enum": ["public"],
+          "description": "Public visibility flag for list query parity."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when follow occurred."
+        }
+      },
+      "required": [
+        "userId",
+        "targetUserId",
+        "username",
+        "displayName",
+        "avatarUrl",
+        "profileVisibility",
+        "createdAt"
+      ]
+    },
+    "LikedPost": {
+      "title": "LikedPost",
+      "description": "Index document under a user's likedPosts subcollection for instant liked state.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "UID of the user who liked the post."
+        },
+        "postId": {
+          "type": "string",
+          "description": "ID of the liked post."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when post was liked."
+        }
+      },
+      "required": ["userId", "postId", "createdAt"]
+    },
+    "AppNotification": {
+      "title": "AppNotification",
+      "description": "Real-time notification delivered to a creator.",
+      "type": "object",
+      "properties": {
+        "recipientId": {
+          "type": "string",
+          "description": "UID of the user receiving the notification."
+        },
+        "actorId": {
+          "type": "string",
+          "description": "UID of the user who triggered the notification."
+        },
+        "actorUsername": {
+          "type": "string",
+          "description": "Username of the actor."
+        },
+        "actorDisplayName": {
+          "type": "string",
+          "description": "Display name of the actor."
+        },
+        "actorAvatarUrl": {
+          "type": "string",
+          "description": "Avatar URL of the actor."
+        },
+        "type": {
+          "type": "string",
+          "enum": ["like", "comment", "follow", "share"],
+          "description": "Notification type."
+        },
+        "postId": {
+          "type": "string",
+          "description": "Related post ID if applicable, or empty string."
+        },
+        "message": {
+          "type": "string",
+          "description": "Human-readable notification body."
+        },
+        "seen": {
+          "type": "boolean",
+          "description": "Whether the recipient has read the notification."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when notification was created."
+        }
+      },
+      "required": [
+        "recipientId",
+        "actorId",
+        "actorUsername",
+        "actorDisplayName",
+        "actorAvatarUrl",
+        "type",
+        "postId",
+        "message",
+        "seen",
+        "createdAt"
+      ]
+    },
+    "VideoPost": {
+      "title": "VideoPost",
+      "description": "A short video post shared by an Instabook creator.",
+      "type": "object",
+      "properties": {
+        "authorId": {
+          "type": "string",
+          "description": "UID of the creator."
+        },
+        "authorUsername": {
+          "type": "string",
+          "description": "Handle of the creator."
+        },
+        "authorDisplayName": {
+          "type": "string",
+          "description": "Display name of the creator."
+        },
+        "authorAvatarUrl": {
+          "type": "string",
+          "description": "Avatar URL of the creator."
+        },
+        "caption": {
+          "type": "string",
+          "description": "Video caption and hashtags."
+        },
+        "videoUrl": {
+          "type": "string",
+          "description": "HTTPS stream URL or local device media URI."
+        },
+        "thumbnailUrl": {
+          "type": "string",
+          "description": "Optional cover thumbnail URL."
+        },
+        "category": {
+          "type": "string",
+          "description": "Explore category tag."
+        },
+        "visibility": {
+          "type": "string",
+          "enum": ["public", "private"],
+          "description": "Post visibility."
+        },
+        "likesCount": {
+          "type": "integer",
+          "description": "Total likes count."
+        },
+        "commentsCount": {
+          "type": "integer",
+          "description": "Total comments count."
+        },
+        "sharesCount": {
+          "type": "integer",
+          "description": "Total shares count."
+        },
+        "viewsCount": {
+          "type": "integer",
+          "description": "Total views count."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when post was created."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when post was updated."
+        }
+      },
+      "required": [
+        "authorId",
+        "authorUsername",
+        "authorDisplayName",
+        "authorAvatarUrl",
+        "caption",
+        "videoUrl",
+        "thumbnailUrl",
+        "category",
+        "visibility",
+        "likesCount",
+        "commentsCount",
+        "sharesCount",
+        "viewsCount",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "PostLike": {
+      "title": "PostLike",
+      "description": "Like marker on a video post.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "UID of the user who liked the post."
+        },
+        "postId": {
+          "type": "string",
+          "description": "ID of the post."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when like was created."
+        }
+      },
+      "required": ["userId", "postId", "createdAt"]
+    },
+    "PostComment": {
+      "title": "PostComment",
+      "description": "User comment on a video post.",
+      "type": "object",
+      "properties": {
+        "postId": {
+          "type": "string",
+          "description": "ID of the parent post."
+        },
+        "authorId": {
+          "type": "string",
+          "description": "UID of the commenter."
+        },
+        "authorUsername": {
+          "type": "string",
+          "description": "Handle of the commenter."
+        },
+        "authorDisplayName": {
+          "type": "string",
+          "description": "Display name of the commenter."
+        },
+        "authorAvatarUrl": {
+          "type": "string",
+          "description": "Avatar URL of the commenter."
+        },
+        "text": {
+          "type": "string",
+          "description": "Comment body text (1-300 chars)."
+        },
+        "visibility": {
+          "type": "string",
+          "enum": ["public"],
+          "description": "Comment visibility."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when comment was posted."
+        }
+      },
+      "required": [
+        "postId",
+        "authorId",
+        "authorUsername",
+        "authorDisplayName",
+        "authorAvatarUrl",
+        "text",
+        "visibility",
+        "createdAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "Public creator profiles and follower/following/post counters."
+    },
+    "/users/{userId}/followers/{followerId}": {
+      "schema": { "$ref": "#/entities/FollowEdge" },
+      "description": "Users following {userId}."
+    },
+    "/users/{userId}/following/{targetId}": {
+      "schema": { "$ref": "#/entities/FollowEdge" },
+      "description": "Creators followed by {userId}."
+    },
+    "/users/{userId}/likedPosts/{postId}": {
+      "schema": { "$ref": "#/entities/LikedPost" },
+      "description": "Posts liked by {userId}."
+    },
+    "/users/{userId}/notifications/{notificationId}": {
+      "schema": { "$ref": "#/entities/AppNotification" },
+      "description": "Real-time activity notifications for {userId}."
+    },
+    "/posts/{postId}": {
+      "schema": { "$ref": "#/entities/VideoPost" },
+      "description": "Public and private video posts shared on Instabook."
+    },
+    "/posts/{postId}/likes/{userId}": {
+      "schema": { "$ref": "#/entities/PostLike" },
+      "description": "Per-user like marker on a video post."
+    },
+    "/posts/{postId}/comments/{commentId}": {
+      "schema": { "$ref": "#/entities/PostComment" },
+      "description": "Comments on a video post."
+    }
+  }
+}

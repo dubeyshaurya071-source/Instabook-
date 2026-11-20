@@ -1,0 +1,6 @@
+{
+  "name": "Instabook",
+  "description": "A blue-and-white social video sharing app where users post videos, like, comment, share, explore trending reels, follow creators, and receive real-time notifications.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

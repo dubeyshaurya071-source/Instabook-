@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Instabook</string>
+    <string name="tagline_auth">Share short videos, connect with creators, and explore live moments.</string>
+    <string name="sign_in_google">Continue with Google</string>
+    <string name="signing_in">Signing in...</string>
+    <string name="nav_feed">Feed</string>
+    <string name="nav_explore">Explore</string>
+    <string name="nav_create">Create</string>
+    <string name="nav_alerts">Alerts</string>
+    <string name="nav_profile">Profile</string>
+    <string name="follow_action">Follow</string>
+    <string name="following_action">Following</string>
+    <string name="share_video_title">Share Video</string>
+    <string name="pick_video_button">Pick Video from Device</string>
+    <string name="publish_video_button">Publish to Instabook</string>
+    <string name="mark_all_read">Mark all read</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="sign_out">Sign Out</string>
+</resources>
